@@ -1,0 +1,16 @@
+2021-05-23  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/simpleParser.cpp (simpleParser): Initial example from upstream
+	* src/examples.h: Copied verbatim from upstream
+
+	* src/Makevars: Added to set C++17 and include path
+
+	* .editorconfig: Added
+
+	* inst/include/toml++: Imported from toml++ (using release 2.4.0
+	along with a handful of commits)
+
+	* DESCRIPTION: Via pkgKitten with Rcpp, tinytest, roxygen2 options
+	* NAMESPACE: Idem
+	* {src,man,R,tests}/*: Idem
+
