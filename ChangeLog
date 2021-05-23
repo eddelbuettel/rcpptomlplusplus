@@ -1,11 +1,15 @@
 2021-05-23  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/simpleParser.cpp (simpleParser): Initial example from upstream
+	* man/simpleParser.Rd: Generated
 	* src/examples.h: Copied verbatim from upstream
+	* inst/toml/example.toml: Copied verbatim from upstream
 
 	* src/Makevars: Added to set C++17 and include path
 
 	* .editorconfig: Added
+	* .gitignore: Idem
+	* .Rbuildignore: Idem
 
 	* inst/include/toml++: Imported from toml++ (using release 2.4.0
 	along with a handful of commits)

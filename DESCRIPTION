@@ -10,3 +10,4 @@ License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp
 Suggests: tinytest
+RoxygenNote: 6.0.1

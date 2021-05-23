@@ -20,6 +20,16 @@ using namespace std::string_view_literals;
 #define STRICT_R_HEADERS
 #include <Rcpp.h>
 
+//' Simple Example Parser
+//'
+//' This example is adapted from the upstream documentation and simply prints
+//' an existing TOML file to standard output.
+//'
+//' @param filename An existing TOML file
+//' @return An integer indicating suggess or failure
+//' @examples
+//' file <- system.file("toml", "example.toml", package="RcppTomlPlusPlus")
+//' simpleParser(file)
 // [[Rcpp::export]]
 int simpleParser(const std::string & filename) {
     examples::init();
