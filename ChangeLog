@@ -10,6 +10,7 @@
 	* .editorconfig: Added
 	* .gitignore: Idem
 	* .Rbuildignore: Idem
+	* README.md: Idem
 
 	* inst/include/toml++: Imported from toml++ (using release 2.4.0
 	along with a handful of commits)
