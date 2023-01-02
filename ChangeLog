@@ -5,6 +5,13 @@
 	* src/simpleParser.cpp: Tweaks to make R CMD check happy
 	* src/examples.h: Idem
 
+	* .github/workflows/ci.yaml: Added
+
+	* src/parse.cpp (tomlparseImpl): Beginning of parser
+	* src/RcppExports.cpp: Generated
+	* R/RcppExports.R: Idem
+	* man/tomlparseImpl: Idem
+
 2021-05-23  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/simpleParser.cpp (simpleParser): Initial example from upstream

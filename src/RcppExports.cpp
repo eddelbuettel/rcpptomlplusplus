@@ -10,6 +10,39 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// tomlparseImpl
+Rcpp::List tomlparseImpl(const std::string input, bool verbose, bool fromfile, bool includize, bool escape);
+RcppExport SEXP _RcppTomlPlusPlus_tomlparseImpl(SEXP inputSEXP, SEXP verboseSEXP, SEXP fromfileSEXP, SEXP includizeSEXP, SEXP escapeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::string >::type input(inputSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    Rcpp::traits::input_parameter< bool >::type fromfile(fromfileSEXP);
+    Rcpp::traits::input_parameter< bool >::type includize(includizeSEXP);
+    Rcpp::traits::input_parameter< bool >::type escape(escapeSEXP);
+    rcpp_result_gen = Rcpp::wrap(tomlparseImpl(input, verbose, fromfile, includize, escape));
+    return rcpp_result_gen;
+END_RCPP
+}
+// foo
+void foo();
+RcppExport SEXP _RcppTomlPlusPlus_foo() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    foo();
+    return R_NilValue;
+END_RCPP
+}
+// foo2
+void foo2();
+RcppExport SEXP _RcppTomlPlusPlus_foo2() {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    foo2();
+    return R_NilValue;
+END_RCPP
+}
 // simpleParser
 int simpleParser(const std::string& filename);
 RcppExport SEXP _RcppTomlPlusPlus_simpleParser(SEXP filenameSEXP) {
@@ -23,6 +56,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_RcppTomlPlusPlus_tomlparseImpl", (DL_FUNC) &_RcppTomlPlusPlus_tomlparseImpl, 5},
+    {"_RcppTomlPlusPlus_foo", (DL_FUNC) &_RcppTomlPlusPlus_foo, 0},
+    {"_RcppTomlPlusPlus_foo2", (DL_FUNC) &_RcppTomlPlusPlus_foo2, 0},
     {"_RcppTomlPlusPlus_simpleParser", (DL_FUNC) &_RcppTomlPlusPlus_simpleParser, 1},
     {NULL, NULL, 0}
 };
