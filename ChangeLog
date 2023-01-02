@@ -1,3 +1,10 @@
+2023-01-02  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/include/toml++: Upgraded to toml++ 3.2.0
+
+	* src/simpleParser.cpp: Tweaks to make R CMD check happy
+	* src/examples.h: Idem
+
 2021-05-23  Dirk Eddelbuettel  <edd@debian.org>
 
 	* src/simpleParser.cpp (simpleParser): Initial example from upstream
@@ -18,4 +25,3 @@
 	* DESCRIPTION: Via pkgKitten with Rcpp, tinytest, roxygen2 options
 	* NAMESPACE: Idem
 	* {src,man,R,tests}/*: Idem
-

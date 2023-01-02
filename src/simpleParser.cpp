@@ -10,8 +10,6 @@
 // See https://github.com/marzer/tomlplusplus/blob/master/LICENSE for the full license text.
 // SPDX-License-Identifier: MIT
 
-#include "examples.h"
-
 #define TOML_UNRELEASED_FEATURES 1
 #include <toml++/toml.h>
 
@@ -19,6 +17,8 @@ using namespace std::string_view_literals;
 
 #define STRICT_R_HEADERS
 #include <Rcpp.h>
+
+#include "examples.h"
 
 //' Simple Example Parser
 //'
@@ -40,7 +40,7 @@ int simpleParser(const std::string & filename) {
         Rcpp::Rcout << table << "\n";
     }
     catch (const toml::parse_error& err) {
-        std::cerr << err << "\n";
+        Rcpp::Rcerr << err << "\n";
         return 1;
     }
     return 0;

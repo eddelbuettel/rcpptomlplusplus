@@ -45,8 +45,9 @@ namespace examples
 		#endif
 
 		std::ios_base::sync_with_stdio(false);
-		std::cout << std::boolalpha;
+		//std::cout << std::boolalpha;
+        Rcpp::Rcout << std::boolalpha;
 
-		srand(static_cast<unsigned int>(time(nullptr)));
+		//srand(static_cast<unsigned int>(time(nullptr)));
 	}
 }
