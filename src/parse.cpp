@@ -3,21 +3,39 @@
 
 #include <toml++/toml.h>
 
+void visitTable(const toml::table& tbl, const std::string& ind);
+
+void visitArray(const toml::array& arr, const std::string& ind = "") {
+    arr.for_each([ind](auto&& elem) {
+        if (elem.is_table()) {
+            Rcpp::Rcout << "is table\n";
+            visitTable(*elem.as_table(), ind + std::string("  "));
+        } else if (elem.is_array()) {
+            Rcpp::Rcout << "is array\n";
+            visitArray(*elem.as_array(), ind + std::string("  "));
+        } else if (elem.is_value()) {
+            Rcpp::Rcout << ind << elem << "\n";
+        } else {
+            Rcpp::Rcout << ind << "unknown type: " << elem.type() << "\n";
+        }
+    });
+}
+
 void visitTable(const toml::table& tbl, const std::string& ind = "") {
     tbl.for_each([ind](const toml::key& key, auto&& val) {
         Rcpp::Rcout << ind << key << " ";
         if (val.is_array_of_tables()) {
             Rcpp::Rcout << "is array of tables\n";
-        }
-        if (val.is_table()) {
+        } else if (val.is_table()) {
             Rcpp::Rcout << "is table\n";
             visitTable(*val.as_table(), ind + std::string("  "));
-        }
-        if (val.is_array()) {
+        } else if (val.is_array()) {
             Rcpp::Rcout << "is array\n";
-        }
-        if (val.is_value()) {
+            visitArray(*val.as_array(), ind + std::string("  "));
+        } else if (val.is_value()) {
             Rcpp::Rcout << "is value: " << val << "\n";
+        } else {
+            Rcpp::Rcout << ind << "unknown type: " << val.type() << "\n";
         }
     });
 }
