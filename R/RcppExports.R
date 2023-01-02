@@ -13,14 +13,6 @@ tomlparseImpl <- function(input, verbose = FALSE, fromfile = TRUE, includize = F
     .Call(`_RcppTomlPlusPlus_tomlparseImpl`, input, verbose, fromfile, includize, escape)
 }
 
-foo <- function() {
-    invisible(.Call(`_RcppTomlPlusPlus_foo`))
-}
-
-foo2 <- function() {
-    invisible(.Call(`_RcppTomlPlusPlus_foo2`))
-}
-
 #' Simple Example Parser
 #'
 #' This example is adapted from the upstream documentation and simply prints

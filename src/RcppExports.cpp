@@ -25,24 +25,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// foo
-void foo();
-RcppExport SEXP _RcppTomlPlusPlus_foo() {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    foo();
-    return R_NilValue;
-END_RCPP
-}
-// foo2
-void foo2();
-RcppExport SEXP _RcppTomlPlusPlus_foo2() {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    foo2();
-    return R_NilValue;
-END_RCPP
-}
 // simpleParser
 int simpleParser(const std::string& filename);
 RcppExport SEXP _RcppTomlPlusPlus_simpleParser(SEXP filenameSEXP) {
@@ -57,8 +39,6 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_RcppTomlPlusPlus_tomlparseImpl", (DL_FUNC) &_RcppTomlPlusPlus_tomlparseImpl, 5},
-    {"_RcppTomlPlusPlus_foo", (DL_FUNC) &_RcppTomlPlusPlus_foo, 0},
-    {"_RcppTomlPlusPlus_foo2", (DL_FUNC) &_RcppTomlPlusPlus_foo2, 0},
     {"_RcppTomlPlusPlus_simpleParser", (DL_FUNC) &_RcppTomlPlusPlus_simpleParser, 1},
     {NULL, NULL, 0}
 };
