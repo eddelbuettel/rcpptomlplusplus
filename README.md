@@ -3,7 +3,7 @@
 
 ### Status
 
-Minimal not-yet-really functional but working package for TOML 1.0 support
+Minimal and not-yet-fully functional but working package for TOML 1.0 support
 for R using the newer [toml++](https://github.com/marzer/tomlplusplus)
 header-only C++17 library
 
