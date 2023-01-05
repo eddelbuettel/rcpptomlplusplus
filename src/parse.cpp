@@ -40,6 +40,11 @@ void visitTable(const toml::table& tbl, const std::string& ind = "") {
     });
 }
 
+SEXP getValue(const toml::node& nod) {
+    Rcpp::Rcout << "Type of node is " << nod.type() << std::endl;
+    return R_NilValue;
+}
+
 //' Parse a TOML file
 //'
 //' @param input [character] TOML input, either as chracter value or path to TOML file
@@ -62,8 +67,30 @@ Rcpp::List tomlparseImpl(const std::string input,
 
     const toml::table tbl = (fromfile) ? toml::parse_file(input) : toml::parse(input);
 
-    visitTable(tbl);
+    //if (verbose) visitTable(tbl);
 
     Rcpp::StretchyList sl;
+    //tbl.for_each([sl](const toml::key& key, auto&& val) {
+    for (auto it = tbl.cbegin(); it != tbl.cend(); it++) {
+        const toml::key& key = it->first;
+        const toml::node& nod = it->second;
+        Rcpp::Rcout << key << " ";
+        if (nod.is_array_of_tables()) {
+            Rcpp::Rcout << "is array of tables\n";
+        } else if (nod.is_table()) {
+            Rcpp::Rcout << "is table\n";
+            //visitTable(*nod.as_table(), ind + std::string("  "));
+        } else if (nod.is_array()) {
+            Rcpp::Rcout << "is array\n";
+            //visitArray(*nod.as_array(), ind + std::string("  "));
+        } else if (nod.is_value()) {
+            Rcpp::Rcout << "is value of type: " << nod.type() << "\n";
+            sl.push_back(Rcpp::Named(key.data()) = getValue(nod));
+            //getValues
+        } else {
+            Rcpp::Rcout << "unknown type: " << nod.type() << "\n";
+        }
+    }
+
     return Rcpp::as<Rcpp::List>(sl);
 }
