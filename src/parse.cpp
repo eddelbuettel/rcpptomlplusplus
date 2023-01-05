@@ -3,6 +3,10 @@
 
 #include <toml++/toml.h>
 
+SEXP getTable(const toml::table& tbl);
+SEXP getArray(const toml::table& array);
+SEXP getValue(const toml::table& node);
+
 void visitTable(const toml::table& tbl, const std::string& ind);
 
 void visitArray(const toml::array& arr, const std::string& ind = "") {
@@ -40,12 +44,11 @@ void visitTable(const toml::table& tbl, const std::string& ind = "") {
     });
 }
 
-#include <iostream>
-#include <sstream>
+SEXP getTable(const toml::table& tbl);
 
 SEXP getValue(const toml::node& nod) {
     toml::node_type nodetype = nod.type();
-    Rcpp::Rcout << "Type of node is " << nodetype << std::endl;
+    //Rcpp::Rcout << "Type of node is " << nodetype << std::endl;
     if (nodetype == toml::node_type::string) {
         std::string val{*nod.as_string()};
         return Rcpp::wrap(val);
@@ -71,12 +74,37 @@ SEXP getValue(const toml::node& nod) {
         const toml::date_time val{*nod.as_date_time()};
         std::stringstream s;    // because we have no Datetime ctor from components :-/
         s << val;
-        Rcpp::Rcout << "Val is " << s.str() << std::endl;
+        //Rcpp::Rcout << "Val is " << s.str() << std::endl;
         Rcpp::Datetime d{s.str(), "%Y-%m-%dT%H:%M:%OS"};
         return Rcpp::wrap(d);
     }
     return R_NilValue;
 }
+
+SEXP getTable(const toml::table& tbl) {
+    Rcpp::StretchyList sl;
+    //tbl.for_each([ind,sl](const toml::key& key, auto&& val) {
+    for (auto it = tbl.cbegin(); it != tbl.cend(); it++) {
+        const toml::key& key = it->first;
+        const toml::node& val = it->second;
+        if (val.is_array_of_tables()) {
+            Rcpp::Rcout << "is array of tables\n";
+        } else if (val.is_table()) {
+            Rcpp::Rcout << "is table\n";
+            sl.push_back(Rcpp::Named(key.data()) = getTable(*val.as_table()));
+        } else if (val.is_array()) {
+            Rcpp::Rcout << "is array\n";
+            //visitArray(*val.as_array(), ind + std::string("  "));
+        } else if (val.is_value()) {
+            Rcpp::Rcout << "is value of type: " << val.type() << "\n";
+            sl.push_back(Rcpp::Named(key.data()) = getValue(val));
+        } else {
+            Rcpp::Rcout << "unknown type: " << val.type() << "\n";
+        }
+    }
+    return sl;
+}
+
 
 //' Parse a TOML file
 //'
@@ -112,6 +140,7 @@ Rcpp::List tomlparseImpl(const std::string input,
             Rcpp::Rcout << "is array of tables\n";
         } else if (nod.is_table()) {
             Rcpp::Rcout << "is table\n";
+            sl.push_back(Rcpp::Named(key.data()) = getTable(*nod.as_table()));
             //visitTable(*nod.as_table(), ind + std::string("  "));
         } else if (nod.is_array()) {
             Rcpp::Rcout << "is array\n";
