@@ -40,8 +40,41 @@ void visitTable(const toml::table& tbl, const std::string& ind = "") {
     });
 }
 
+#include <iostream>
+#include <sstream>
+
 SEXP getValue(const toml::node& nod) {
-    Rcpp::Rcout << "Type of node is " << nod.type() << std::endl;
+    toml::node_type nodetype = nod.type();
+    Rcpp::Rcout << "Type of node is " << nodetype << std::endl;
+    if (nodetype == toml::node_type::string) {
+        std::string val{*nod.as_string()};
+        return Rcpp::wrap(val);
+    }
+    else if (nodetype == toml::node_type::integer) {
+        int64_t val{*nod.as_integer()};
+        return Rcpp::wrap(val);
+    }
+    else if (nodetype == toml::node_type::floating_point) {
+        double val{*nod.as_floating_point()};
+        return Rcpp::wrap(val);
+    }
+    else if (nodetype == toml::node_type::boolean) {
+        bool val = nod.as_boolean();
+        return Rcpp::wrap(val);
+    }
+    else if (nodetype == toml::node_type::date) {
+        const toml::date val{*nod.as_date()};
+        Rcpp::Date d(val.year, val.month, val.day);
+        return Rcpp::wrap(d);
+    }
+    else if (nodetype == toml::node_type::date_time) {
+        const toml::date_time val{*nod.as_date_time()};
+        std::stringstream s;    // because we have no Datetime ctor from components :-/
+        s << val;
+        Rcpp::Rcout << "Val is " << s.str() << std::endl;
+        Rcpp::Datetime d{s.str(), "%Y-%m-%dT%H:%M:%OS"};
+        return Rcpp::wrap(d);
+    }
     return R_NilValue;
 }
 
