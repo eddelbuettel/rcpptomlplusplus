@@ -104,7 +104,7 @@ SEXP getTable(const toml::table& tbl) {
             Rcpp::Rcout << "unknown type in table: " << val.type() << "\n";
         }
     }
-    return sl;
+    return Rcpp::as<Rcpp::List>(sl);
 }
 
 SEXP collapsedList(Rcpp::List ll) {
@@ -172,7 +172,7 @@ SEXP getArray(const toml::array& arr) {
     if (nonested)
         return collapsedList(Rcpp::as<Rcpp::List>(sl));
     else
-        return sl;
+        return Rcpp::as<Rcpp::List>(sl);
 }
 
 
@@ -207,7 +207,13 @@ Rcpp::List tomlparseImpl(const std::string input,
         const toml::node& nod = it->second;
         //Rcpp::Rcout << key << " ";
         if (nod.is_array_of_tables()) {
-            Rcpp::Rcout << "is array of tables\n";
+            Rcpp::Rcout << key << " is array of tables\n";
+            Rcpp::StretchyList l;
+            const toml::array& arr = *tbl.get_as<toml::array>(key);
+            for (auto ait = arr.cbegin(); ait != arr.cend(); ait++) {
+                l.push_back(getTable(*ait->as_table()));
+            }
+            sl.push_back(Rcpp::Named(key.data()) = Rcpp::as<Rcpp::List>(l));
         } else if (nod.is_table()) {
             //Rcpp::Rcout << "is table\n";
             sl.push_back(Rcpp::Named(key.data()) = getTable(*nod.as_table()));
