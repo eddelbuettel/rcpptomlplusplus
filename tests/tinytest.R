@@ -1,4 +1,4 @@
 
 if (requireNamespace("tinytest", quietly=TRUE)) {
-  tinytest::test_package("RcppTomlPlusPlus")
+    tinytest::test_package("RcppTomlPlusPlus")
 }

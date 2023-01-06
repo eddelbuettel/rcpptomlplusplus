@@ -4,20 +4,20 @@
 ##
 ## Copyright (C) 2015 - 2022  Dirk Eddelbuettel
 ##
-## This file is part of RcppTOML.
+## This file is part of RcppTomlPlusPlus.
 ##
-## RcppTOML is free software: you can redistribute it and/or modify it
+## RcppTomlPlusPlus is free software: you can redistribute it and/or modify it
 ## under the terms of the GNU General Public License as published by
 ## the Free Software Foundation, either version 2 of the License, or
 ## (at your option) any later version.
 ##
-## RcppTOML is distributed in the hope that it will be useful, but
+## RcppTomlPlusPlus is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ## GNU General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with RcppTOML.  If not, see <http://www.gnu.org/licenses/>.
+## along with RcppTomlPlusPlus.  If not, see <http://www.gnu.org/licenses/>.
 
 
 ##' Parse a TOML file
@@ -36,11 +36,12 @@
 ##' @param verbose [logical] Optional verbosity flag, no current effect
 ##' @param fromFile [logical] Optional with default value \sQuote{TRUE} indicating parsing from file
 ##' @param includize [logical] Optional legacy option, no current effect
+##' @param escape [logical] Optional boolean whether strings should be escaped, defaults to
+##' \sQuote{TRUE}
 ##' @param ... Used for aliased function and S3 methods
 ##' @param x Used for S3 method
 ##' @param object Used for S3 method
-##' @param escape [logical] Optional legacy option, no current effect
-##' @return A List with the parsed content
+##' @return A list object with the parsed content as an S3 object of class \sQuote{toml}
 parseTOML <- function(input, verbose=FALSE, fromFile=TRUE, includize=FALSE, escape=TRUE) {
     if (fromFile) {
         toml <- tomlparseImpl(path.expand(input), verbose, fromFile, includize, escape)

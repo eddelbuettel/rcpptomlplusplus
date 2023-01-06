@@ -28,7 +28,8 @@ parseToml(...)
 
 \item{includize}{[logical] Optional legacy option, no current effect}
 
-\item{escape}{[logical] Optional legacy option, no current effect}
+\item{escape}{[logical] Optional boolean whether strings should be escaped, defaults to
+\sQuote{TRUE}}
 
 \item{...}{Used for aliased function and S3 methods}
 
@@ -37,7 +38,7 @@ parseToml(...)
 \item{object}{Used for S3 method}
 }
 \value{
-A List with the parsed content
+A list object with the parsed content as an S3 object of class \sQuote{toml}
 }
 \description{
 The function \code{parseTOML}, also aliased to \code{tomlparse} and \code{parseToml},
