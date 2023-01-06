@@ -1,3 +1,20 @@
+2023-01-05  Dirk Eddelbuettel  <edd@debian.org>
+
+	* inst/tinytest/*: Use all test from RcppTOML, passes
+	* src/parse.cpp: Updates throught extending value parsing, adding
+	array, table and array of tables supports
+
+	* R/parseTOML.R: Carried over R interface from RcppTOML, with S3
+	wrapper, small enhancement to roxygen documentation
+	* man/parseTOML.Rd: Updated documentation
+
+	* src/simpleParser.cpp: Removed
+	* src/simpleParser.Rd: Idem
+
+2023-01-04  Dirk Eddelbuettel  <edd@debian.org>
+
+	* src/parse.cpp: Inititial generalization gor values using toml++
+
 2023-01-02  Dirk Eddelbuettel  <edd@debian.org>
 
 	* inst/include/toml++: Upgraded to toml++ 3.2.0
