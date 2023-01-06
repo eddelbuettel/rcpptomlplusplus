@@ -1,4 +1,25 @@
 
+//
+//  RcppTomlPlusPlus -- Rcpp bindings to TOML via cpptomlplusplus
+//                      (based on earlier work in RcppTOML using cpptoml)
+//
+//  Copyright (C) 2015 - 2022  Dirk Eddelbuettel
+//
+//  This file is part of RcppTOML
+//
+//  RcppTOML is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 2 of the License, or
+//  (at your option) any later version.
+//
+//  RcppTOML is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with RcppTOML.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <Rcpp/Lightest>
 
 #include <toml++/toml.h>
@@ -175,16 +196,8 @@ SEXP getArray(const toml::array& arr) {
         return Rcpp::as<Rcpp::List>(sl);
 }
 
-
-//' Parse a TOML file
-//'
-//' @param input [character] TOML input, either as chracter value or path to TOML file
-//' @param verbose [logical] Optional verbosity flag, no current effect
-//' @param fromfile [logical] Optional with default value \sQuote{TRUE} indicating parsing from file
-//' @param includize [logical] Optional legacy option, no current effect
-//' @param escape [logical] Optiona legacy option, no current effect
-//' @return A List with the parsed content
-// [[Rcpp::export]]
+//' @noRd
+// [[Rcpp::export()]]
 Rcpp::List tomlparseImpl(const std::string input,
                          bool verbose=false,
                          bool fromfile=true,

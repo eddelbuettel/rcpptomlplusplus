@@ -1,3 +1,7 @@
 useDynLib(RcppTomlPlusPlus, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
-exportPattern("^[[:alpha:]]+")
+export("parseToml",
+       "parseTOML",
+       "tomlparse")
+S3method("print", "toml")
+S3method("summary", "toml")
