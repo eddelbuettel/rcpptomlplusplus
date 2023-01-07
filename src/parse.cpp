@@ -149,16 +149,12 @@ SEXP getValue(const toml::node& nod, bool escape=true) {
         tm.tm_sec = time.second;
         //tm.tm_isdst = 1; // not filled
         time_t tt = local_timegm(&tm); // helper also used earlier in RcppTOML
-        if (val.is_local()) {
-            Rcpp::DatetimeVector dt(1); // no timezone
-            dt[0] =  tt + time.nanosecond * 1.0e-9;
-            return Rcpp::wrap(dt);
-        } else {
+        if (!val.is_local()) {
             tt = tt - offset->minutes*60;
-            Rcpp::DatetimeVector dt(1, "UTC"); // non-local is UTC
-            dt[0] =  tt + time.nanosecond * 1.0e-9;
-            return Rcpp::wrap(dt);
         }
+        Rcpp::DatetimeVector dt(1, "UTC"); // we always set UTC as RcppTOML did
+        dt[0] =  tt + time.nanosecond * 1.0e-9;
+        return Rcpp::wrap(dt);
     }
     else if (nodetype == toml::node_type::time) {
         const toml::time val{*nod.as_time()};
