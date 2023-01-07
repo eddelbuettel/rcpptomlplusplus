@@ -1,9 +1,7 @@
-
-//
 //  RcppTomlPlusPlus -- Rcpp bindings to TOML via cpptomlplusplus
 //                      (based on earlier work in RcppTOML using cpptoml)
 //
-//  Copyright (C) 2015 - 2022  Dirk Eddelbuettel
+//  Copyright (C) 2015 - 2023  Dirk Eddelbuettel
 //
 //  This file is part of RcppTOML
 //
@@ -150,28 +148,27 @@ SEXP getValue(const toml::node& nod, bool escape=true) {
         tm.tm_min = time.minute;
         tm.tm_sec = time.second;
         //tm.tm_isdst = 1; // not filled
-        time_t tt = local_timegm(&tm); // helper also used earlier
-        tt = tt - offset->minutes*60;
-        Rcpp::DatetimeVector dt(1, "UTC");
-        dt[0] =  tt + time.nanosecond * 1.0e-9;
-        return Rcpp::wrap(dt);
-
-#if 0
-        // We can use offset->minutes to distinguish between UTC and non UTC
-        // Rcpp::Rcout << "Offset seen as " << offset->minutes << std::endl;
-        Rcpp::Datetime d(t);
-        return Rcpp::wrap(d);
-
-        std::stringstream ss;   // because we have no Datetime ctor from components :-/
-        ss << val;
-        //Rcpp::Rcout << "Val is " << s.str() << std::endl;
-        Rcpp::Datetime d{ss.str(), "%Y-%m-%dT%H:%M:%OS"};
-        Rcpp::DatetimeVector vec(1, "UTC");
-        //Rcpp::DatetimeVector vec(1);
-        vec[0] = d;
-        return vec;
-#endif
+        time_t tt = local_timegm(&tm); // helper also used earlier in RcppTOML
+        if (val.is_local()) {
+            Rcpp::DatetimeVector dt(1); // no timezone
+            dt[0] =  tt + time.nanosecond * 1.0e-9;
+            return Rcpp::wrap(dt);
+        } else {
+            tt = tt - offset->minutes*60;
+            Rcpp::DatetimeVector dt(1, "UTC"); // non-local is UTC
+            dt[0] =  tt + time.nanosecond * 1.0e-9;
+            return Rcpp::wrap(dt);
+        }
     }
+    else if (nodetype == toml::node_type::time) {
+        const toml::time val{*nod.as_time()};
+        std::stringstream ss;   		// print the time to string as there is no
+        ss << val;               		// base R time type (we could pull in hms
+        return Rcpp::wrap(ss.str());    // but rather not have the dependency
+    }
+    std::stringstream ss;   // because we have no Datetime ctor from components :-/
+    ss << nodetype;
+    Rcpp::warning("Unknown type: %s", ss.str());
     return R_NilValue;
 }
 
