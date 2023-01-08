@@ -7,8 +7,10 @@
 
 ### Status
 
-Fully functional and working, but still 'new-ish' package for TOML 1.0 support for R using the newer
+Fully functional and working package with TOML 1.0 support for R using the newer
 [toml++](https://github.com/marzer/tomlplusplus) header-only C++17 library
+
+Will likely be 'frozen' here and carried over into the existing package [RcppTOML](https://github.com/eddelbuettel/rcpptoml).
 
 ### Author
 

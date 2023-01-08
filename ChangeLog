@@ -1,5 +1,8 @@
 2023-01-07  Dirk Eddelbuettel  <edd@debian.org>
 
+	* README.md: Note the feature-complete state and likely upcoming
+	transfer into RcppTOML
+
 	* src/parse.cpp (getValue): Datetime allows local and UTC; date and
 	time support added (with time as string as there is not time type)
 	(tomlparseImpl): Removed unused arguments; overall edits
