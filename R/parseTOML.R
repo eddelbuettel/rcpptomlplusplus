@@ -1,8 +1,7 @@
-
 ##  RcppTomlPlusPlus -- Rcpp bindings to TOML via cpptomlplusplus
 ##                      (based on earlier work in RcppTOML using cpptoml)
 ##
-## Copyright (C) 2015 - 2022  Dirk Eddelbuettel
+## Copyright (C) 2015 - 2023  Dirk Eddelbuettel
 ##
 ## This file is part of RcppTomlPlusPlus.
 ##
@@ -43,10 +42,14 @@
 ##' @param object Used for S3 method
 ##' @return A list object with the parsed content as an S3 object of class \sQuote{toml}
 parseTOML <- function(input, verbose=FALSE, fromFile=TRUE, includize=FALSE, escape=TRUE) {
+    if (verbose || includize) {
+        warning("Options 'verbose' and 'includize' are available for legacy ",
+                "support, have no current effect, and may be removed.")
+    }
     if (fromFile) {
-        toml <- tomlparseImpl(path.expand(input), verbose, fromFile, includize, escape)
+        toml <- tomlparseImpl(path.expand(input), fromFile, escape)
     } else {
-        toml <- tomlparseImpl(enc2utf8(input), verbose, fromFile, includize, escape)
+        toml <- tomlparseImpl(enc2utf8(input), fromFile, escape)
     }
     class(toml) <- c("toml", "list")
     attr(toml, "file") <- input
@@ -60,7 +63,6 @@ tomlparse <- function(...) parseTOML(...)
 ## alias for now, to be renamed
 ##' @rdname parseTOML
 parseToml <- function(...) parseTOML(...)
-
 
 ##' @rdname parseTOML
 print.toml <- function(x, ...) {

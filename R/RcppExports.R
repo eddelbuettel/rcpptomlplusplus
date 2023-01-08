@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @noRd
-tomlparseImpl <- function(input, verbose = FALSE, fromfile = TRUE, includize = FALSE, escape = TRUE) {
-    .Call(`_RcppTomlPlusPlus_tomlparseImpl`, input, verbose, fromfile, includize, escape)
+tomlparseImpl <- function(input, fromfile = TRUE, escape = TRUE) {
+    .Call(`_RcppTomlPlusPlus_tomlparseImpl`, input, fromfile, escape)
 }
 

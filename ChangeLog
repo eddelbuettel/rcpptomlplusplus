@@ -2,6 +2,10 @@
 
 	* src/parse.cpp (getValue): Datetime allows local and UTC; date and
 	time support added (with time as string as there is not time type)
+	(tomlparseImpl): Removed unused arguments; overall edits
+	* R/parseTOML.R: Check and warn on no-longer-used arguments here
+	* src/RcppExports.cpp: Regenerated
+	* R/RcppExports.R: Idem
 
 	* inst/tinytest/bool_datetime.toml: Added local datetime, date and time
 	* inst/tinytest/test_bool_datetime.R: Idem
